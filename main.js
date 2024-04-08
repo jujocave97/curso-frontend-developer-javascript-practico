@@ -3,32 +3,48 @@ const desktopMenu= document.querySelector('.desktop-menu');
 const menuBurguerIcon= document.querySelector('.menu');
 const mobileMenu= document.querySelector('.mobile-menu');
 const menuCarritoIcon= document.querySelector('.navbar-shopping-cart');
-const aside= document.querySelector('.product-detail');
+const shoppingCartContainer= document.querySelector('#shoppingCartContainer');
 const cardsContainer= document.querySelector('.cards-container');
+const porductDetailContainer= document.querySelector('#productDetail');
+const productDetailClose= document.querySelector('.product-detail-close'); 
 
 menuEmail.addEventListener('click',toggleDesktopMenu);  // llama al metodo, el metodo tiene que existir
 menuBurguerIcon.addEventListener('click', toggleMobileMenu);
 menuCarritoIcon.addEventListener('click', toggleCarritoAside);
+productDetailClose.addEventListener('click',closeProductDetailAside);
 
 function toggleDesktopMenu(){  
     console.log('Click');
     desktopMenu.classList.toggle('inactive');  // añadir o quitar la clase inactive a desktop menu en el html
-    aside.classList.add('inactive');
+    shoppingCartContainer.classList.add('inactive');
     mobileMenu.classList.add('inactive');
+    porductDetailContainer.classList.add('inactive');
 }                                               // la clase inactive tiene en css display none para que desaparezca, cuando llamamos a este metodo aparece o desaparece el menu
 
 function toggleMobileMenu(){  // aparece y desaparece el menu hamburguesa de la version movil
     mobileMenu.classList.toggle('inactive');
-    aside.classList.add('inactive'); // cierra el menu del carrito
+    shoppingCartContainer.classList.add('inactive'); // cierra el menu del carrito
     desktopMenu.classList.add('inactive');
+    porductDetailContainer.classList.add('inactive');
 }
 
 function toggleCarritoAside(){
-    aside.classList.toggle('inactive');
+    shoppingCartContainer.classList.toggle('inactive');
     mobileMenu.classList.add('inactive');  // cierra el menu
     desktopMenu.classList.add('inactive');
+    porductDetailContainer.classList.add('inactive');
 }
 
+function openProductDetailAside(){
+    porductDetailContainer.classList.remove('inactive');
+    mobileMenu.classList.add('inactive');  // cierra el menu
+    desktopMenu.classList.add('inactive');
+    shoppingCartContainer.classList.add('inactive');
+}
+
+function closeProductDetailAside(){
+    porductDetailContainer.classList.add('inactive');
+}
 
 const productList= [];  // se deberia coger la info de una api 
 
@@ -61,6 +77,7 @@ function renderProducts(productos){
     
         const productImg = document.createElement('img');
         productImg.setAttribute('src',product.image);
+        productImg.addEventListener('click',openProductDetailAside);
     
         const productInfo =  document.createElement('div');
         productInfo.classList.add('product-info');
